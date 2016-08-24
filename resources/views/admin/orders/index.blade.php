@@ -40,10 +40,6 @@
                     <a href="{{ route('admin/orders/edit', ['id'=>$order->id]) }}" class="btn btn-info btn-sm">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>
-                    
-                    <a href="" class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
                 </td>                
             </tr>
             @endforeach
