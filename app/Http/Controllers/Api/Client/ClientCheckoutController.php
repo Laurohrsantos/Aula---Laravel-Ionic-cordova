@@ -73,5 +73,10 @@ class ClientCheckoutController extends Controller
         });
         return $order;
     }
+    
+    public function teste ()
+    {
+        return "Olá Mundo";
+    }
 
 }

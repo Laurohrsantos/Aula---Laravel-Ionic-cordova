@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Models\Order;
 use CodeDelivery\Validators\OrderValidator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Class OrderRepositoryEloquent
@@ -14,6 +16,24 @@ use CodeDelivery\Validators\OrderValidator;
  */
 class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 {
+    
+    public function getByIdAndDeliveryman ($id, $idDeliveryman)
+    {
+        $result = $this->with(['client', 'items', 'cupom'])->findWhere(['id' => $id, 'user_deliveryman_id' => $idDeliveryman]);
+        
+         if($result instanceof Collection)
+        {
+            $result = $result->first();
+            if ($result) {
+                $result->items->each(function ($item){
+                    $item->product;
+                });
+            }
+        }
+        
+        return $result;
+    }
+    
     /**
      * Specify Model class name
      *
