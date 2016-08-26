@@ -54,6 +54,7 @@ class OrderServices {
             endif;
             $order->save();
             \DB::commit();
+            return $order;
             
         } catch (\Exception $e) {
             

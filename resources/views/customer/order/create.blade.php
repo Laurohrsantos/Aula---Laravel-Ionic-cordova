@@ -22,7 +22,7 @@
         <tbody>
             <tr>
                 <td>
-                    <select class="form-control" name="items[0][product_id]">
+                    <select class="form-control" name="items[0][product_id]" required="required">
                         <option value="">Selecione Produtos</option>
                         @foreach($products as $p)
                         <option value="{{$p->id}}" data-price="{{$p->price}}">{{$p->name . ' - R$ '. $p->price}}</option>

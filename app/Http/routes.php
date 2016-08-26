@@ -58,3 +58,27 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth.checkrole:client', '
     Route::post('order/store', ['as' => 'order/store', 'uses' => 'CheckoutController@store']);
     
 });
+
+//Rota para autenticacao do acesso a API
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+//Rotas da API
+Route::group(['prefix' => 'api', 'middleware' => 'oauth', 'as' => 'api/'], function (){
+    
+    //Rotas da API para cliente
+    Route::group(['prefix' => 'client', 'middleware' => 'oauth.checkrole:client', 'as' => 'client/'], function (){
+        
+        Route::resource('order', 'Api\Client\ClientCheckoutController', ['except' => ['create', 'edit', 'destroy']]);
+        
+    });
+    
+    //Rotas da API para entregador
+    Route::group(['prefix' => 'deliveryman', 'middleware' => 'oauth.checkrole:deliveryman', 'as' => 'deliveryman/'], function (){
+        
+
+    });
+    
+    Route::get('teste', ['as' => 'teste/index', 'uses' => 'CheckoutController@index']);
+    
+});
