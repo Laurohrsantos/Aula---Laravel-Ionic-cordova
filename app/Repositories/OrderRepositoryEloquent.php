@@ -17,19 +17,33 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 {
     
+    //DESATIVOU O PRESENTER POR PADRÂO
+    //QUANDO QUISER UTILIZAR TERA QUE ATIVAR
+    protected $skipPresenter = true;
+    
     public function getByIdAndDeliveryman ($id, $idDeliveryman)
     {
         $result = $this->with(['client', 'items', 'cupom'])->findWhere(['id' => $id, 'user_deliveryman_id' => $idDeliveryman]);
         
-         if($result instanceof Collection)
+        if($result instanceof Collection)
         {
             $result = $result->first();
-            if ($result) {
-                $result->items->each(function ($item){
-                    $item->product;
-                });
+        } else {
+            if(isset($result['data']) && count($result['data']) == 1)
+            {
+                $result = [
+                    'data' => $result['data'][0]
+                ];
+            } else {
+                throw new ModelNotFoundException("Order não existe");
             }
         }
+
+//        if($result){
+//            $result->items->each(function($item){
+//                $item->product;
+//            });
+//        }
         
         return $result;
     }
@@ -43,7 +57,6 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     {
         return Order::class;
     }
-
     
 
     /**
@@ -53,4 +66,10 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+    
+    public function presenter()
+    {
+        return \CodeDelivery\Presenters\OrderPresenter::class;
+    }
+    
 }

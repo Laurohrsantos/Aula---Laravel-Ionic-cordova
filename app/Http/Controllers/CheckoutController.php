@@ -4,6 +4,7 @@ namespace CodeDelivery\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use CodeDelivery\Http\Requests\CheckoutRequest;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\OrderRepository;
@@ -59,7 +60,7 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CheckoutRequest $request)
     {
         $data = $request->all();
         $clientId = $this->userRepository->find(Auth::user()->id)->client->id;

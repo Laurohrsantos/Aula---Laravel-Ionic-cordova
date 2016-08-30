@@ -81,6 +81,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'oauth', 'as' => 'api/'], funct
 
     });
     
-    Route::get('teste', ['as' => 'teste/index', 'uses' => 'Api\Client\ClientCheckoutController@teste']);
+    Route::get('authenticated/', ['prefix' => 'authenticated', 'uses' => 'Api\Client\ClientCheckoutController@authenticated']);
     
 });

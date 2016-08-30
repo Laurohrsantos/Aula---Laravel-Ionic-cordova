@@ -4,7 +4,8 @@ namespace CodeDelivery\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeDelivery\Http\Requests;
+//use CodeDelivery\Http\Requests;
+use CodeDelivery\Http\Requests\AdminCupomRequest;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\CupomRepository;
 
@@ -45,7 +46,7 @@ class CupomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminCupomRequest $request)
     {
         $cupom = $request->all();
         $this->repository->create($cupom); 
@@ -53,16 +54,6 @@ class CupomsController extends Controller
         return redirect()->route('admin/cupoms/index');        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

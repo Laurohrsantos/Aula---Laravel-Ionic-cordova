@@ -23,6 +23,9 @@ class ClientCheckoutController extends Controller
     private $productRepository;
     private $orderServices;
     
+    private $with = ['client', 'cupom', 'items'];
+
+
     public function __construct(OrderRepository $repository, 
                                 UserRepository $userRepository,
                                 ProductRepository $productRepository,
@@ -38,7 +41,7 @@ class ClientCheckoutController extends Controller
     {
         $id = Authorizer::getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
-        $orders = $this->repository->with('items')->scopeQuery(function ($query) use ($clientId){
+        $orders = $this->repository->skipPresenter(false)->with($this->with)->with('items')->scopeQuery(function ($query) use ($clientId){
             return $query->where('client_id', '=', $clientId);
         })->paginate();
         
@@ -51,7 +54,7 @@ class ClientCheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CheckoutRequest $request)
     {
         $data = $request->all();
         $id = Authorizer::getResourceOwnerId();
@@ -60,23 +63,26 @@ class ClientCheckoutController extends Controller
         $data['client_id'] = $clientId;
         
         $o = $this->orderServices->create($data);
-        $o = $this->repository->with('items')->find($id);
-        return $o;
+        //$o = $this->repository->with('items')->find($id);
+        return $this->repository->skipPresenter(false)->with($this->with)->find($id);
        
     }
     
     public function show ($id)
     {
-        $order = $this->repository->with('client','cupom', 'items')->find($id);
-        $order->items->each(function($item){
+        /*
+         * NAO PRECISOU MAIS USAR ESSA QUERY POR CAUSA DO MODEL FRACTAL
+        $order = $this->repository->with('client','cupom', 'items')->find($id);        
+         * $order->items->each(function($item){
             $item->product;        
-        });
-        return $order;
+        });*/
+        return $this->repository->skipPresenter(false)->with($this->with)->find($id);
     }
     
-    public function teste ()
+    
+    public function authenticated ()
     {
-        return "Olá Mundo";
+        return 'olá';
     }
-
+    
 }
