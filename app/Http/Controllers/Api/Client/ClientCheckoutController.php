@@ -80,9 +80,12 @@ class ClientCheckoutController extends Controller
     }
     
     
-    public function authenticated ()
+    public function authenticated()
     {
-        return 'olá';
+        $id = Authorizer::getResourceOwnerId();
+        return $this->userRepository
+            ->skipPresenter(false)
+            ->find($id);
     }
     
 }
