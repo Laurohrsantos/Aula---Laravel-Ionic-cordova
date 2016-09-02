@@ -8,10 +8,7 @@ use CodeDelivery\Transformers\CupomTransformer;
 use CodeDelivery\Transformers\ClientTransformer;
 use CodeDelivery\Transformers\OrderTransformer;
 
-/**
- * Class OrderTransformer
- * @package namespace CodeDelivery\Transformers;
- */
+
 class OrderTransformer extends TransformerAbstract
 {
     

@@ -27,4 +27,9 @@ class OrderItemTransformer extends TransformerAbstract
             'qtd'   => (int) $model->qtd
         ];
     }
+
+    public function includeProduct(OrderItem $model)
+    {
+        return $this->item($model->product, new ProductTransformer());
+    }
 }
