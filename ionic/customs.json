@@ -1,8 +1,15 @@
 {
     "elements": {
+        "ion-nav-view": {},
         "ion-header-bar": {},
-        "ion-content": {},
-        "ion-pane": {}
+        "ion-content": {
+            "attributes": {
+                "class": {}
+            }
+        },
+        "ion-nav-bar": {},
+        "ion-pane": {},
+        "ion-view": {}
     },
     "attributes": {}
 }
