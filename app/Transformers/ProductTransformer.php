@@ -17,10 +17,13 @@ class ProductTransformer extends TransformerAbstract
     public function transform(Product $model)
     {
         return [
-            'id'         => (int) $model->id,
-            'name'         => $model->name,
+            'id'            => (int) $model->id,
+            'name'          => $model->name,
             'price'         => $model->price,
-            'description'         => $model->description,
+            'description'   => $model->description,
+            
+            'created_at'    => $model->created_at,
+            'update_at'     => $model->update_at,
         ];
     }
     

@@ -3,7 +3,18 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'angular-oauth2'])
+
+//Habilita os controllers
+angular.module('starter.controllers',[]);
+angular.module('starter.services',[]);
+
+angular.module('starter', [
+    'ionic', 'starter.controllers', 'starter.services', 'angular-oauth2', 'ngResource', 'ngCordova'
+])
+
+.constant('appConfig', {
+    baseUrl: 'http://localhost:8000' //usar ipconfig no terminal para ser o ip (192.168.1.3) do wifi e passar php artisan serve --host=IP
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,10 +34,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-oauth2'])
   });
 })
 
-.config(function($stateProvider, OAuthProvider, $urlRouterProvider, OAuthTokenProvider){
+.config(function($stateProvider, OAuthProvider, $urlRouterProvider, OAuthTokenProvider, appConfig, $provide){
     
     OAuthProvider.configure({
-      baseUrl: 'http://localhost:8000',
+      baseUrl: appConfig.baseUrl,
       clientId: 'appid01',
       clientSecret: 'secret', // optional
       grantPath: '/oauth/access_token'
@@ -52,4 +63,63 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angular-oauth2'])
         templateUrl: 'templates/home.html',
         controller: 'HomeCtrl'
     })
+    .state('client', {
+        abstract: true,
+        url: '/client',
+        template: '<ion-nav-view/>'
+    })
+        .state('client.checkout', {
+            cache: false,
+            url: '/checkout',
+            templateUrl: 'templates/client/checkout.html',
+            controller: 'ClientCheckoutCtrl'
+        })
+        .state('client.checkout_item_detail', {
+            url: '/checkout/detail/:index',
+            templateUrl: 'templates/client/checkout_item_detail.html',
+            controller: 'ClientCheckoutDetailCtrl'
+        })
+        .state('client.checkout_successful', {
+            cache: false,
+            url: '/checkout/successful',
+            templateUrl: 'templates/client/checkout_successful.html',
+            controller: 'ClientCheckoutSuccessful'
+        })
+        .state('client.view_products', {
+            url: '/view_products',
+            templateUrl: 'templates/client/view_products.html',
+            controller: 'ClientViewProductCtrl'
+        });
+        
+    $provide.decorator('OAuthToken', ['$localStorage','$delegate',function($localStorage,$delegate){
+        Object.defineProperties($delegate,{
+            setToken: {
+                value: function(data){
+                    return $localStorage.setObject('token', data);
+                },
+                enumerable: true,    //Quando pega o objeto o metodo estara visivel
+                configurable: true,  //Mudar o objeto
+                writable: true       //Mudar o metodo
+            },
+            getToken: {
+                value: function(){
+                    return $localStorage.getObject('token');
+                },
+                enumerable: true,
+                configurable: true,
+                writable: true
+            },
+            removeToken: {
+                value: function(){
+                    $localStorage.setObject('token', null);
+                },
+                enumerable: true,
+                configurable: true,
+                writable: true
+            }
+
+        });
+        return $delegate;
+    }]);
+
 });

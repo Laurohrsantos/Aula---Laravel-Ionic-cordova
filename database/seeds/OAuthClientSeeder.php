@@ -12,7 +12,7 @@ class OAuthClientSeeder  extends Seeder
     public function run()
     {
         DB::table('oauth_clients')->insert([
-            'id' => 'appid1',
+            'id' => 'appid01',
             'secret' => 'secret',
             'name' => 'Minha App Mobile'
         ]);

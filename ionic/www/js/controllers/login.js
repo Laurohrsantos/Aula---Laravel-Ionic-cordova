@@ -1,8 +1,8 @@
-angular.module('starter.controllers',[])
+angular.module('starter.controllers')
 
 .controller('LoginCtrl',  [
-    '$scope', 'OAuth', '$cookies', '$ionicPopup', '$state',
-    function ($scope, OAuth, $cookies, $ionicPopup, $state) {
+    '$scope', 'OAuth', '$cookies', '$ionicPopup', '$state', '$ionicLoading',
+    function ($scope, OAuth, $cookies, $ionicPopup, $state, $ionicLoading) {
     
     $scope.user = {
         username: '',
@@ -10,24 +10,20 @@ angular.module('starter.controllers',[])
     };
             
     $scope.login = function () {
+        $ionicLoading.show({
+            template: '<ion-spinner icon="android"></ion-spinner>'
+        });
         OAuth.getAccessToken($scope.user)
             .then(function (data){
-                $state.go('home');
+                $ionicLoading.hide();
+                $state.go('client.checkout');
             }, function (responseError) {
+                $ionicLoading.hide();
                 $ionicPopup.alert({
                     title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
                     template: 'Credenciais inválidas!'
                 });            
             });
     };
-}])
-
-.controller('HomeCtrl',  ['$scope', 'OAuth',
-    function($scope){
-        //Aqui vai o código para pegar os dados mas não sei como :C
-        $scope.user = {
-            username: 'Usuário logado.'            
-        };
-    }
-]);
+}]);
 

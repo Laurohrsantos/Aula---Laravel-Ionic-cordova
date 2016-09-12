@@ -47,7 +47,7 @@ class OrderServices {
             $total = 0;
 
             foreach ($items as $item):
-                $item['price'] = $this->productRepository->find($item['product_id'])->price;
+                $item['price'] = $this->productRepository->skipPresenter(true)->find($item['product_id'])->price;
                 $order->items()->create($item);
                 $total += $item['price'] * $item['qtd'];
             endforeach;

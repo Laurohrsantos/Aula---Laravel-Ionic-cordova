@@ -1,7 +1,10 @@
 {
     "elements": {
         "ion-nav-view": {},
+        "ion-list": {},
         "ion-header-bar": {},
+        "ion-item": {},
+        "ion-refresher": {},
         "ion-content": {
             "attributes": {
                 "class": {}
@@ -11,5 +14,7 @@
         "ion-pane": {},
         "ion-view": {}
     },
-    "attributes": {}
+    "attributes": {
+        "menu-close": {}
+    }
 }
