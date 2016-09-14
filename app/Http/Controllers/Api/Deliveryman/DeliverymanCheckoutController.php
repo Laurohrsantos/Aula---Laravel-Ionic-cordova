@@ -11,6 +11,7 @@ use CodeDelivery\Services\OrderServices;
 use Illuminate\Support\Facades\Auth;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use CodeDelivery\Http\Requests\CheckoutRequest;
+use CodeDelivery\Models\Geo;
 
 
 class DeliverymanCheckoutController extends Controller
@@ -56,6 +57,16 @@ class DeliverymanCheckoutController extends Controller
             return $this->repository->find($id);
         }
         abort(400, "Order não encontrado");
+    }
+    
+    public function geo (Request $request, Geo $geo, $id)
+    {
+        $idDeliveryman = Authorizer::getResourceOwnerId();
+        $order = $this->repository->getByIdAndDeliveryman($id,$idDeliveryman);
+        $geo->lat = $request->get('lat');
+        $geo->long = $request->get('long');
+//        event(new GetLocationDeliveryMan($geo,$order));
+        return $geo;
     }
 
 }

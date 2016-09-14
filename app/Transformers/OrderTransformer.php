@@ -7,6 +7,7 @@ use CodeDelivery\Models\Order;
 use CodeDelivery\Transformers\CupomTransformer;
 use CodeDelivery\Transformers\ClientTransformer;
 use CodeDelivery\Transformers\OrderTransformer;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class OrderTransformer extends TransformerAbstract
@@ -26,12 +27,21 @@ class OrderTransformer extends TransformerAbstract
             'id'     => (int) $model->id,
             'total'  => (float) $model->total,
             'status' => $model->status,
-
+            'product_names' => $this->getArrayProductNames($model->items), 
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];
+    }
+    
+    protected function getArrayProductNames (Collection $items) 
+    {
+        $names = [];
+        foreach ($items as $item) {
+            $names[] = $item->product->name;
+        }
+        return $names;
     }
     
     public function includeClient(Order $model)

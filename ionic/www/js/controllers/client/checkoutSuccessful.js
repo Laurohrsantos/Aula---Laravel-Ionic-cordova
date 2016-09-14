@@ -11,7 +11,7 @@ angular.module('starter.controllers')
         $cart.clear();
         
         $scope.openList = function () {
-            
+            $state.go('client.order');
         };
         
 }]);

@@ -1,18 +1,22 @@
 {
     "elements": {
-        "ion-nav-view": {},
-        "ion-list": {},
+        "ion-side-menus": {},
         "ion-header-bar": {},
-        "ion-item": {},
         "ion-refresher": {},
+        "ion-footer-bar": {},
         "ion-content": {
             "attributes": {
                 "class": {}
             }
         },
         "ion-nav-bar": {},
+        "ion-side-menu": {},
+        "ion-nav-view": {},
+        "ion-list": {},
+        "ion-item": {},
         "ion-pane": {},
-        "ion-view": {}
+        "ion-view": {},
+        "ion-side-menu-content": {}
     },
     "attributes": {
         "menu-close": {}

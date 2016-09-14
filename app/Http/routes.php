@@ -82,10 +82,11 @@ Route::group(['middleware' => 'cors'], function(){
 
             Route::resource('order', 'Api\Deliveryman\DeliverymanCheckoutController', ['except' => ['create', 'edit', 'destroy', 'store']]);
             Route::patch('order/{id}/update-status', ['as' => 'order/update-status', 'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus']);
+            Route::post('order/{id}/geo',['as'=>'orders.geo','uses'=>'Api\Deliveryman\DeliverymanCheckoutController@geo']);
 
         });
 
-        Route::get('authenticated/', 'Api\Client\ClientCheckoutController@authenticated');
+        Route::get('authenticated/', 'Api\UserController@authenticated');
         
         Route::get('cupom/{code}', 'Api\CupomController@show');
 

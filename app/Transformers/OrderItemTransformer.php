@@ -22,9 +22,12 @@ class OrderItemTransformer extends TransformerAbstract
     public function transform(OrderItem $model)
     {
         return [
-            'id'    => (int) $model->id,
-            'price' => (int) $model->price,
-            'qtd'   => (int) $model->qtd
+            'id'         => (int) $model->id,
+            'product_id' => (int) $model->product_id,
+            'price'      => (float) $model->price,
+            'qtd'        => (int) $model->qtd,
+            'created_at' => $model->created_at,
+            'update_at'  => $model->update_at
         ];
     }
 

@@ -24,7 +24,7 @@ class ProductsController extends Controller
     
     public function index()
     {
-        $products = $this->repository->paginate();
+        $products = $this->repository->skipPresenter(true)->paginate(); //coloquei o skipPresenter para true para renderizar na view do laravel
         
         return view('admin/products/index', compact('products'));
     }

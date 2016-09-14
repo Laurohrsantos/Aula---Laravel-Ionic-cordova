@@ -4,12 +4,11 @@
         <h2 class="title">Dados do usuário logado</h2>
     </div>
     <ion-content class="padding has-subheader">
-        <p><b>Seja vem vindo:</b> {{ user.name }}</p>
-        <p><b>Cadastro nº.:</b> {{ user.id }}</p>
-        <p><b>Nome:</b> {{ user.name }}</p>
-        <p><b>E-mail:</b> {{ user.email }}</p>
-        <p><b>Função:</b> {{ user.role }}</p>
-        <p><b>Desde de:</b> {{ user.created_at }}</p>
+        <p><b>Seja vem vindo:</b> {{ user.data.name }}</p>
+        <p><b>Cadastro nº.:</b> {{ user.data.id }}</p>
+        <p><b>Nome:</b> {{ user.data.name }}</p>
+        <p><b>E-mail:</b> {{ user.data.email }}</p>
+        <p><b>Função:</b> {{ user.data.role }}</p>
     </ion-content>
 </ion-view>
 

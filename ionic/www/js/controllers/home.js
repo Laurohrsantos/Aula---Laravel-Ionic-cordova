@@ -10,8 +10,7 @@ angular.module('starter.controllers')
     });
     
     Home.query({}, function (data) {
-        $scope.user = data;
-        console.log(data);
+        $scope.user = data;        
         $ionicLoading.hide();
     }, function (dataError) {
          $ionicLoading.hide();

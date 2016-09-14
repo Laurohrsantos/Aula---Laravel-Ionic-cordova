@@ -1,8 +1,8 @@
 angular.module('starter.controllers')
 
 .controller('LoginCtrl',  [
-    '$scope', 'OAuth', '$cookies', '$ionicPopup', '$state', '$ionicLoading',
-    function ($scope, OAuth, $cookies, $ionicPopup, $state, $ionicLoading) {
+    '$scope', '$state', '$ionicPopup', 'UserData', '$ionicLoading', 'User', 'OAuth', 'OAuthToken',
+    function ($scope, $state, $ionicPopup, UserData, $ionicLoading, User, OAuth, OAuthToken) {
     
     $scope.user = {
         username: '',
@@ -10,20 +10,30 @@ angular.module('starter.controllers')
     };
             
     $scope.login = function () {
+        
         $ionicLoading.show({
             template: '<ion-spinner icon="android"></ion-spinner>'
         });
-        OAuth.getAccessToken($scope.user)
+        
+        var promise = OAuth.getAccessToken($scope.user);            
+            promise
             .then(function (data){
+                return User.authenticated({include: 'client'}).$promise;
+//                $ionicLoading.hide();
+//                $state.go('client.checkout');
+            }).then(function (data) {
                 $ionicLoading.hide();
+                UserData.set(data.data);
                 $state.go('client.checkout');
-            }, function (responseError) {
+            }, function (respondeError) {
                 $ionicLoading.hide();
+                UserData.set(null);
+                OAuthToken.removeToken();
                 $ionicPopup.alert({
                     title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
                     template: 'Credenciais inválidas!'
-                });            
+                });
+                console.log(responseError);
             });
     };
 }]);
-
