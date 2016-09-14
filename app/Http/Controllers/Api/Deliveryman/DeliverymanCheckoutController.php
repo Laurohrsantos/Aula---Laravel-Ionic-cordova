@@ -51,12 +51,12 @@ class DeliverymanCheckoutController extends Controller
     public function updateStatus (Request $request, $id)
     {
         $idDeliveryman = Authorizer::getResourceOwnerId();
-        $order = $this->orderServices->updateStatus($id, $idDeliveryman, $request->get('status'));
-        if($order)
-        {
-            return $this->repository->find($id);
-        }
-        abort(400, "Order não encontrado");
+        return $this->orderServices->updateStatus($id, $idDeliveryman, $request->get('status'));
+//        if($order)
+//        {
+//            return $this->repository->find($id);
+//        }
+//        abort(400, "Order não encontrado");
     }
     
     public function geo (Request $request, Geo $geo, $id)
