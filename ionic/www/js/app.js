@@ -10,14 +10,17 @@ angular.module('starter.services',[]);
 angular.module('starter.filters', []);
 
 angular.module('starter', [
-    'ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'angular-oauth2', 'ngResource', 'ngCordova'
+    'ionic', 'starter.controllers', 'starter.services', 'starter.filters', 
+    'angular-oauth2', 'ngResource', 'ngCordova', 'uiGmapgoogle-maps', 'pusher-angular'
 ])
 
 .constant('appConfig', {
-    baseUrl: 'http://localhost:8000' //usar ipconfig no terminal para ser o ip (192.168.1.3) do wifi e passar php artisan serve --host=IP
+    baseUrl: 'http://localhost:8000', //usar ipconfig no terminal para ser o ip (192.168.1.3) do wifi e passar php artisan serve --host=IP
+    pusherKey: 'e34c07b6be6cef66ea5f'
 })
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $window, appConfig) {
+  $window.client = new Pusher(appConfig.pusherKey);  
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -102,6 +105,12 @@ angular.module('starter', [
             url: '/view_products',
             templateUrl: 'templates/client/view_products.html',
             controller: 'ClientViewProductCtrl'
+        })
+        .state('client.view_delivery', {
+            cache: false,
+            url: '/view_delivery/:id',
+            templateUrl: 'templates/client/view_delivery.html',
+            controller: 'ClientViewDeliveryCtrl'
         })
     .state('deliveryman',{
         abstract: true,

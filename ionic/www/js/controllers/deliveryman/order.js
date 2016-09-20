@@ -43,4 +43,5 @@ angular.module('starter.controllers')
                 template: 'Ocorreu um erro ao atualizar, tente novamente.'
             });
         });
+
 }]);

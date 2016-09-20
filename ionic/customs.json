@@ -9,11 +9,21 @@
                 "class": {}
             }
         },
+        "ui-gmap-marker": {},
         "ion-nav-bar": {},
         "ion-side-menu": {},
         "ion-nav-view": {},
         "ion-list": {},
+        "ui-gmap-google-map": {
+            "attributes": {
+                "center": {},
+                "zoom": {}
+            }
+        },
         "ion-item": {},
+        "ui-gmap-map-control": {},
+        "ui-gmap-markers": {},
+        "style": {},
         "ion-pane": {},
         "ion-view": {},
         "ion-side-menu-content": {}

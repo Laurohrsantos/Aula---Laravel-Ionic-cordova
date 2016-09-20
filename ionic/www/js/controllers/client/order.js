@@ -1,8 +1,8 @@
 angular.module('starter.controllers')
 
 .controller('ClientOrderCtrl',  [
-    '$scope', '$state', 'ClientOrder', '$ionicLoading', '$ionicPopup',
-    function ($scope, $state, ClientOrder, $ionicLoading, $ionicPopup) {
+    '$scope', '$state', 'ClientOrder', '$ionicLoading', '$ionicPopup', '$ionicActionSheet',
+    function ($scope, $state, ClientOrder, $ionicLoading, $ionicPopup, $ionicActionSheet) {
         
     $scope.items = []; 
 
@@ -42,7 +42,31 @@ angular.module('starter.controllers')
                 title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
                 template: 'Ocorreu um erro ao atualizar, tente novamente.'
             });
-        });;
+        });
+        
+    $scope.showActionSheet = function (order) {
+        $ionicActionSheet.show({
+            buttons: [
+                {text: 'Ver Detalhes'},
+                {text: 'Ver Entrega'}
+            ],
+            titleText: 'Opções',
+            cancelText: 'Cancelar',
+            cancel: function (){
+                
+            },
+            buttonClicked: function (index) {
+                switch (index) {
+                    case 0:
+                        $state.go('client.view_order', {id: order.id});
+                        break;
+                    case 1:
+                        $state.go('client.view_delivery', {id: order.id});
+                        break;
+                }
+            }
+        });
+    };
         
     $ionicLoading.hide();
     

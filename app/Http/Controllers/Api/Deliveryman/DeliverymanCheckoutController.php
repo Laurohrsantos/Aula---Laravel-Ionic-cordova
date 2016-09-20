@@ -2,16 +2,15 @@
 
 namespace CodeDelivery\Http\Controllers\Api\Deliveryman;
 
-use Illuminate\Http\Request;
+use CodeDelivery\Events\GetLocationDeliveryMan;
 use CodeDelivery\Http\Controllers\Controller;
+use CodeDelivery\Http\Requests;
+use CodeDelivery\Models\Geo;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\UserRepository;
-use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Services\OrderServices;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-use CodeDelivery\Http\Requests\CheckoutRequest;
-use CodeDelivery\Models\Geo;
 
 
 class DeliverymanCheckoutController extends Controller
@@ -65,7 +64,7 @@ class DeliverymanCheckoutController extends Controller
         $order = $this->repository->getByIdAndDeliveryman($id,$idDeliveryman);
         $geo->lat = $request->get('lat');
         $geo->long = $request->get('long');
-//        event(new GetLocationDeliveryMan($geo,$order));
+        event(new GetLocationDeliveryMan($geo,$order));
         return $geo;
     }
 

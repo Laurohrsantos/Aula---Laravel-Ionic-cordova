@@ -14,7 +14,7 @@ class GetLocationDeliveryman extends Event implements ShouldBroadcast
     
     public $geo;
     
-    private $model;
+    private $modelO;
 
     /**
      * Create a new event instance.
@@ -24,7 +24,7 @@ class GetLocationDeliveryman extends Event implements ShouldBroadcast
     public function __construct(Geo $geo, Order $order)
     {
         $this->geo = $geo;
-        $this->order = $order;
+        $this->modelO = $order;
     }
 
     /**
@@ -34,6 +34,6 @@ class GetLocationDeliveryman extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return [$this->model->hash];
+        return [$this->modelO->hash];
     }
 }
