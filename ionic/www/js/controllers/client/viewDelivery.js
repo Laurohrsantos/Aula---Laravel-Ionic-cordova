@@ -130,6 +130,7 @@ angular.module('starter.controllers')
                 }
             }
         });
+        channel.trigger('CodeDelivery\\Events\\GetLocationDeliveryMan', {teste: 'teste'});
     };
     
     function createBounds() {        
