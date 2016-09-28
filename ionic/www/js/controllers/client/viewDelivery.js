@@ -100,7 +100,7 @@ angular.module('starter.controllers')
     
     function watchPosisitionDelivery (channel) {
         var pusher = $pusher($window.client); 
-        var channel = pusher.subscribe(channel);
+        var channel = pusher.subscribe('presence-'+ channel);
 
         channel.bind('CodeDelivery\\Events\\GetLocationDeliveryMan', function (data) {
             var lat = data.geo.lat, 
@@ -130,7 +130,7 @@ angular.module('starter.controllers')
                 }
             }
         });
-        channel.trigger('CodeDelivery\\Events\\GetLocationDeliveryMan', {teste: 'teste'});
+//        channel.trigger('client-CodeDelivery\\Events\\GetLocationDeliveryMan', {teste: 'teste'});
     };
     
     function createBounds() {        

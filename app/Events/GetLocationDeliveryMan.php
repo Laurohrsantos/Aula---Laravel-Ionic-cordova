@@ -8,13 +8,13 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use CodeDelivery\Models\Geo;
 use CodeDelivery\Models\Order;
 
-class GetLocationDeliveryman extends Event implements ShouldBroadcast
+class GetLocationDeliveryMan extends Event implements ShouldBroadcast
 {
     use SerializesModels;
     
     public $geo;
     
-    private $modelO;
+    private $model;
 
     /**
      * Create a new event instance.
@@ -24,7 +24,7 @@ class GetLocationDeliveryman extends Event implements ShouldBroadcast
     public function __construct(Geo $geo, Order $order)
     {
         $this->geo = $geo;
-        $this->modelO = $order;
+        $this->model = $order;
     }
 
     /**
@@ -34,6 +34,6 @@ class GetLocationDeliveryman extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return [$this->modelO->hash];
+        return [$this->model->hash];
     }
 }
