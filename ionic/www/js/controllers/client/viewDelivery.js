@@ -100,7 +100,7 @@ angular.module('starter.controllers')
     
     function watchPosisitionDelivery (channel) {
         var pusher = $pusher($window.client); 
-        var channel = pusher.subscribe('presence-'+ channel);
+        var channel = pusher.subscribe(channel);
 
         channel.bind('CodeDelivery\\Events\\GetLocationDeliveryMan', function (data) {
             var lat = data.geo.lat, 
