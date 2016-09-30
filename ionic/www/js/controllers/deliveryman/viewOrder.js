@@ -39,11 +39,12 @@ angular.module('starter.controllers')
                     function (responseError) {
                         //
                     }, function (position) {
+                        console.log(position);
                         if(!lat) {
                             lat = position.coords.latitude;
                             long = position.coords.longitude;
                         } else {
-                            long -= 0.0444;
+                            long += 0.000444;
                         }                        
                         DeliverymanOrder.geo({id: $stateParams.id}, {
                             lat: lat,

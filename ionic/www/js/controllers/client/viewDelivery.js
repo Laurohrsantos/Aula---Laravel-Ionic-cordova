@@ -89,6 +89,11 @@ angular.module('starter.controllers')
                     }
                 });
                 
+                $scope.map.center = {
+                    latitude: lat,
+                    longitude: long
+                };
+                
             }else{
                 $ionicPopup.alert({
                 title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
@@ -105,32 +110,30 @@ angular.module('starter.controllers')
         channel.bind('CodeDelivery\\Events\\GetLocationDeliveryMan', function (data) {
             var lat = data.geo.lat, 
                 long = data.geo.long;
-                
-            if ($scope.markers.length === 1 || $scope.markers.length === 0) {
-                
+  
+            if ($scope.markers.length == 1 || $scope.markers.length == 0) {
                 $scope.markers.push({
-                    id: 'entregador',
+                    id: 'deliveryman',
                     coords: {
                         latitude: lat,
                         longitude: long
                     },
                     options: {
                         title: "Entregador",
-                        icon: icon + 'icon47.png'
+                        icon: icon + "/icon39.png"
                     }
                 });
                 return;
             }
             for (var key in $scope.markers) {
-                if ($scope.markers[key.id] === 'entregador') {
+                if ($scope.markers[key].id == "deliveryman") {
                     $scope.markers[key].coords = {
                         latitude: lat,
-                        longitude: long
+                        longitude: long,
                     };
                 }
             }
         });
-//        channel.trigger('client-CodeDelivery\\Events\\GetLocationDeliveryMan', {teste: 'teste'});
     };
     
     function createBounds() {        
