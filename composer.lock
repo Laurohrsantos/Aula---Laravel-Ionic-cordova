@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "50b2395bb4716102834e76c25dfc8708",
-    "content-hash": "88cb4594fe361e040fd677898820b790",
+    "hash": "3192b1e5afcc2d72f5b02d40abff24dd",
+    "content-hash": "b94516950ab9da3dc38de4b9fcc5c419",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -214,16 +214,16 @@
         },
         {
             "name": "dmitrovskiy/ionic-push-php",
-            "version": "1.0.0",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dmitrovskiy/ionic-push-php.git",
-                "reference": "155bdfdc3e800c49fa7e890959ab13f8ec1bd920"
+                "url": "https://github.com/codeedu/ionic-push-php.git",
+                "reference": "11efc0ff18c786ca3e81ce76e20f97174f777e1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmitrovskiy/ionic-push-php/zipball/155bdfdc3e800c49fa7e890959ab13f8ec1bd920",
-                "reference": "155bdfdc3e800c49fa7e890959ab13f8ec1bd920",
+                "url": "https://api.github.com/repos/codeedu/ionic-push-php/zipball/11efc0ff18c786ca3e81ce76e20f97174f777e1f",
+                "reference": "11efc0ff18c786ca3e81ce76e20f97174f777e1f",
                 "shasum": ""
             },
             "require": {
@@ -239,7 +239,11 @@
                     "Dmitrovskiy\\IonicPush\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Dmitrovskiy\\IonicPush\\Tests\\": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -258,7 +262,10 @@
                 "notifications",
                 "push"
             ],
-            "time": "2016-07-07 11:56:13"
+            "support": {
+                "source": "https://github.com/codeedu/ionic-push-php/tree/v0.0.3"
+            },
+            "time": "2016-07-01 01:51:01"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

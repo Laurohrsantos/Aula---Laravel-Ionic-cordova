@@ -60,6 +60,24 @@ angular.module('starter.controllers')
             if (watch && typeof watch === 'object' && watch.hasOwnProperty('watchID')) {
                 $cordovaGeolocation.clearWatch(watch.watchID);
             }
-        };        
+        };
+        
+        $scope.completeDelivery = function(){
+            DeliverymanOrder.updateStatus({id: $stateParams.id},{status: 2},function(data){
+                    $ionicPopup.alert({
+                        title: "Status do pedido",
+                        template: 'Pedido ENTREGUE'
+                    }).then(function(){
+                        $state.go('deliveryman.order');
+                    });
+                },function(){
+                $ionicPopup.alert({
+                    title: "Erro",
+                    template: 'Erro ao alterar status'
+                }).then(function(){
+                    $state.go('deliveryman.order');
+                });
+            });
+        };
             
 }]);
