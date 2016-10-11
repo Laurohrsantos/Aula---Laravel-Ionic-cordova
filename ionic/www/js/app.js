@@ -8,15 +8,20 @@
 angular.module('starter.controllers',[]);
 angular.module('starter.services',[]);
 angular.module('starter.filters', []);
+angular.module('starter.run', []);
 
 angular.module('starter', [
-    'ionic', 'starter.controllers', 'starter.services', 'starter.filters', 
-    'angular-oauth2', 'ngResource', 'ngCordova', 'uiGmapgoogle-maps', 'pusher-angular', 'ionic.service.core'
+    'ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.run',
+    'angular-oauth2', 'ngResource', 'ngCordova', 'uiGmapgoogle-maps', 'pusher-angular', 'ionic.service.core', 'permission'
 ])
 
 .constant('appConfig', {
     baseUrl: 'http://localhost:8000', //usar ipconfig no terminal para ser o ip (192.168.1.3) do wifi e passar php artisan serve --host=IP
-    pusherKey: 'e34c07b6be6cef66ea5f'
+    pusherKey: 'e34c07b6be6cef66ea5f',
+    redirectAfterLogin: {
+        client: 'client.order',
+        deliveryman: 'deliveryman.order'
+    }
 })
 
 .run(function($ionicPlatform, $window, appConfig, $localStorage) {
@@ -73,9 +78,14 @@ angular.module('starter', [
     
     $stateProvider
     .state('login', {
+        cache: false,
         url: '/login',
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
+    })
+    .state('logout', {
+        url: '/logout',
+        controller: 'LogoutCtrl'
     })
     .state('home', {
         url: '/home',
@@ -87,7 +97,13 @@ angular.module('starter', [
         cache: false,
         url: '/client',
         templateUrl: 'templates/client/menu.html',
-        controller: 'ClientMenuCtrl'
+        controller: 'ClientMenuCtrl',
+        data:{
+            permissions: {
+                only: ['client-role'],
+                redirectTo: 'login'
+            }
+        }
     })
         .state('client.order', {
             url: '/order',
@@ -132,7 +148,13 @@ angular.module('starter', [
         cache: false,
         url: '/deliveryman',
         templateUrl: 'templates/deliveryman/menu.html',
-        controller: 'DeliverymanMenuCtrl'
+        controller: 'DeliverymanMenuCtrl',
+        data:{
+            permissions: {
+                only: ['deliveryman-role'],
+                redirectTo: 'login'
+            }
+        }
     })
         .state('deliveryman.order',{
             cache: false,

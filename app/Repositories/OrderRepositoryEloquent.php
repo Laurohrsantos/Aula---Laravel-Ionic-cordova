@@ -27,7 +27,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
         if($result){
             return $this->parserResult($result);
         }
-        throw (new ModelNotFoundException())->setModel(get_class($this->model));
+        throw (new ModelNotFoundException())->setModel($this->model);
   
 
 
@@ -55,6 +55,15 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 //        }
         
 //        return $result;
+    }
+    
+    public function getByIdAndClient ($id, $idClient)
+    {
+        $result = $this->model->where('id', $id)->where('client_id', $idClient)->first();
+        if($result){
+            return $this->parserResult($result);
+        }
+        throw (new ModelNotFoundException())->setModel($this->model);
     }
     
     /**

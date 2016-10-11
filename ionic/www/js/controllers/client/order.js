@@ -1,27 +1,37 @@
 angular.module('starter.controllers')
 
 .controller('ClientOrderCtrl',  [
-    '$scope', '$state', 'ClientOrder', '$ionicLoading', '$ionicPopup', '$ionicActionSheet',
-    function ($scope, $state, ClientOrder, $ionicLoading, $ionicPopup, $ionicActionSheet) {
+    '$scope', '$state', 'ClientOrder', '$ionicLoading', '$ionicPopup', '$ionicActionSheet', '$timeout',
+    function ($scope, $state, ClientOrder, $ionicLoading, $ionicPopup, $ionicActionSheet, $timeout) {
+    
+    var page = 1;
         
-    $scope.items = []; 
+    $scope.items = [];
+    $scope.canMoreItems = true;
 
-    $ionicLoading.show({
-        template: '<ion-spinner icon="android"></ion-spinner>'
-    });
+//    $ionicLoading.show({
+//        template: '<ion-spinner icon="android"></ion-spinner>'
+//    });
     
     $scope.doRefresh = function () {
-        getOrders().then(function (data) {
-            $scope.items = data.data;
+        page = 1;
+        $scope.items = [];
+        $scope.canMoreItems = true;
+        $scope.loadMore();
+        $timeout(function (){
             $scope.$broadcast('scroll.refreshComplete');
-        }, function (dataError) {
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            $ionicPopup.alert({
-                title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
-                template: 'Ocorreu um erro ao atualizar, tente novamente.'
-            });
-        });
+        },200);
+//        getOrders().then(function (data) {
+//            $scope.items = data.data;
+//            $scope.$broadcast('scroll.refreshComplete');
+//        }, function (dataError) {
+//            $ionicLoading.hide();
+//            $scope.$broadcast('scroll.refreshComplete');
+//            $ionicPopup.alert({
+//                title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
+//                template: 'Ocorreu um erro ao atualizar, tente novamente.'
+//            });
+//        });
     };
     
     $scope.openOrderDetail = function (order) {
@@ -29,20 +39,20 @@ angular.module('starter.controllers')
     };
     
     function getOrders () {        
-        return ClientOrder.query({id: null, orderBy: 'created_at', sortedBy: 'desc'}).$promise;        
+        return ClientOrder.query({id: null, page: page, orderBy: 'created_at', sortedBy: 'desc'}).$promise;        
     };
     
-    getOrders().then(function (data) {
-            $scope.items = data.data;
-            $scope.$broadcast('scroll.refreshComplete');
-        }, function (dataError) {
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            $ionicPopup.alert({
-                title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
-                template: 'Ocorreu um erro ao atualizar, tente novamente.'
-            });
-        });
+//    getOrders().then(function (data) {
+//            $scope.items = data.data;
+//            $scope.$broadcast('scroll.refreshComplete');
+//        }, function (dataError) {
+//            $ionicLoading.hide();
+//            $scope.$broadcast('scroll.refreshComplete');
+//            $ionicPopup.alert({
+//                title: '<p class="assertive"><i class="icon icon-left ion-alert"></i> Erro</p>',
+//                template: 'Ocorreu um erro ao atualizar, tente novamente.'
+//            });
+//        });
         
     $scope.showActionSheet = function (order) {
         $ionicActionSheet.show({
@@ -65,6 +75,17 @@ angular.module('starter.controllers')
                         break;
                 }
             }
+        });
+    };
+    
+    $scope.loadMore = function () {
+        getOrders().then(function(data){
+            $scope.items = $scope.items.concat(data.data);
+            if($scope.items.length == data.meta.pagination.total){
+                $scope.canMoreItems = false;
+            }
+            page += 1;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
         });
     };
         

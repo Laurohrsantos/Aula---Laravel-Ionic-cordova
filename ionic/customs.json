@@ -24,6 +24,7 @@
         "ui-gmap-map-control": {},
         "ui-gmap-markers": {},
         "style": {},
+        "ion-infinite-scroll": {},
         "ion-pane": {},
         "ion-view": {},
         "ion-side-menu-content": {}
