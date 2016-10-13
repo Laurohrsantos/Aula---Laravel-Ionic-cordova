@@ -12,7 +12,7 @@ angular.module('starter.run', []);
 
 angular.module('starter', [
     'ionic', 'starter.controllers', 'starter.services', 'starter.filters', 'starter.run',
-    'angular-oauth2', 'ngResource', 'ngCordova', 'uiGmapgoogle-maps', 'pusher-angular', 'ionic.service.core', 'permission'
+    'angular-oauth2', 'ngResource', 'ngCordova', 'uiGmapgoogle-maps', 'pusher-angular', 'ionic.service.core', 'permission', 'http-auth-interceptor'
 ])
 
 .constant('appConfig', {
@@ -198,6 +198,11 @@ angular.module('starter', [
             }
 
         });
+        return $delegate;
+    }]);
+
+    $provide.decorator('oauthInterceptor', ['$delegate',function($delegate){
+        delete $delegate['responseError'];
         return $delegate;
     }]);
 

@@ -7,9 +7,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Psr\Log\LoggerInterface;
+use Barryvdh\Cors\Stack\CorsService;
 
 class Handler extends ExceptionHandler
 {
+    private $corsService;
+    
+    public function __construct(LoggerInterface $log, CorsService $corsService) {
+        parent::__construct($log);
+        $this->corsService = $corsService;
+    }
     /**
      * A list of the exception types that should not be reported.
      *
@@ -44,6 +52,12 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+        }elseif($e instanceof OAuthException){
+            $response = response()->json([
+               'error' => $e->errorType,
+               'error_description' => $e->getMessage()
+            ], $e->httpStatusCode, $e->getHttpHeader());
+            return $this->corsService->addActualRequestHeaders($response, $request);
         }
 
         return parent::render($request, $e);
